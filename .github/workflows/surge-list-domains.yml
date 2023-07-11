@@ -6,9 +6,11 @@ jobs:
   list_deployments:
     runs-on: ${{ vars.RUNNER_UBUNTU }}
     steps:
-      # TODO npm ci + cache
       - name: Install the patch of the surge cli
-        run: echo "this is a patch"
+        uses: bahmutov/npm-install@v1
+        with:
+          # do not set --ignore-scripts as we patch "surge" with a script
+          install-command: npm ci --prefer-offline --audit false
       - name: List deployments
         run: |
           npx surge --token ${{ secrets.SURGE_TOKEN }} list
