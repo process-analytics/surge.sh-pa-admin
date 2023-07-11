@@ -6,6 +6,9 @@ jobs:
   list_deployments:
     runs-on: ${{ vars.RUNNER_UBUNTU }}
     steps:
+      # TODO npm ci + cache
+      - name: Install the patch of the surge cli
+        run: echo "this is a patch"
       - name: List deployments
         run: |
           npx surge --token ${{ secrets.SURGE_TOKEN }} list
