@@ -4,10 +4,12 @@ on:
   schedule:
     - cron: '0 3 * * 6'
   workflow_dispatch:
-    send-slack-notifications:
-      description: 'If true, send slack notifications when errors occur'
-      required: false
-      default: 'false'
+    inputs:
+      send-slack-notifications:
+        description: 'If true, send slack notifications when errors occur'
+        required: false
+        type: boolean
+        default: false
 jobs:
   teardown_old_deployments:
     runs-on: ${{ vars.RUNNER_UBUNTU }}
@@ -26,6 +28,6 @@ jobs:
           MESSAGE: |
             :fire: The teardown of old surge.sh domains failed!
             @channel *We need someone*!
-            - Add a :fire_extinguisher:if you take the action to resolve the conflicts (only one person is required)
+            - Add a :fire_extinguisher: if you investigate the problem (only one person is required)
             - Add a :sweat_drops: when it’s done (and eventually a :party_parrot:)
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
