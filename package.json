@@ -1,6 +1,10 @@
 {
   "private": true,
+  "scripts": {
+    "prepare": "patch-package"
+  },
   "devDependencies": {
+    "patch-package": "~7.0.1",
     "surge": "~0.23.1"
   }
 }
