@@ -8,6 +8,7 @@ on:
       send-slack-notifications:
         description: 'If true, send slack notifications when errors occur'
         required: false
+        type: boolean
         default: false
 jobs:
   teardown_old_deployments:
