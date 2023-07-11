@@ -1,0 +1,15 @@
+name: Teardown a surge.sh domain
+on:
+  workflow_dispatch:
+    inputs:
+      deployment-url:
+        description: 'Url of the deployment to teardown.'
+        required: true
+
+jobs:
+  teardown_deployments:
+    runs-on: ${{ vars.RUNNER_UBUNTU }}
+    steps:
+      - name: Teardown deployments
+        run: |
+          npx surge --token ${{ secrets.SURGE_TOKEN }} teardown ${{ github.event.inputs.deployment-url }}
