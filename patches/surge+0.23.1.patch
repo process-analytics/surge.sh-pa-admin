@@ -1,0 +1,28 @@
+diff --git a/node_modules/surge/lib/middleware/list.js b/node_modules/surge/lib/middleware/list.js
+index af0ede9..7a6151b 100644
+--- a/node_modules/surge/lib/middleware/list.js
++++ b/node_modules/surge/lib/middleware/list.js
+@@ -39,11 +39,20 @@ module.exports = function(req, next){
+             var pn = project.planName.blue
+           }
+         }
++
++        // START fix - handle undefined properties of the 'project' variable
++        // if(!project.timeAgoInWords || !project.cmd || !project.platform) {
++        //   console.warn('SURGE, project is missing information', project)
++        // } else {
++        //   console.info('SURGE, project details', project)
++        // }
++
+         var row = [
+           perm || project.domain,
+-          project.timeAgoInWords.grey,
+-          project.cmd.grey,
+-          project.platform.grey,
++          project.timeAgoInWords?.grey ?? "N/A",
++          project.cmd?.grey ?? "N/A",
++          project.platform?.grey ?? "N/A",
++          // END fix
+           pn || "",
+           //lastcmd !== project.cmd ? (project.cmd).grey : "",
+         ]
