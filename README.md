@@ -17,3 +17,7 @@ Workflows are used to manage surge.sh domains specific to the Process Analytics 
 - https://github.com/sintaxi/surge/issues/307 "Surge List not working" implementation from https://github.com/sintaxi/surge/pull/319 (opened in 2018-04-10)
 
 The patch has been initiated and is updated by running `npx patch-package surge` to integrate local changes done in `node_modules/surge/lib` 
+
+To benefit from the patches, run the following commands from the root of this repository:
+- `npm install`
+- then run `npx surge ...`
