@@ -4,10 +4,11 @@ on:
   schedule:
     - cron: '0 3 * * 6'
   workflow_dispatch:
-    send-slack-notifications:
-      description: 'If true, send slack notifications when errors occur'
-      required: false
-      default: 'false'
+    inputs:
+      send-slack-notifications:
+        description: 'If true, send slack notifications when errors occur'
+        required: false
+        default: false
 jobs:
   teardown_old_deployments:
     runs-on: ${{ vars.RUNNER_UBUNTU }}
