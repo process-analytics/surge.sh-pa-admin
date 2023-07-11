@@ -47,3 +47,4 @@ Run npx surge --token *** list
    1688562584180 process-analytics-bpmn-visualization-js-demo_preview-pr-2748.surge.sh      6 days ago    surge   surge.sh   Standard 
 ```
 - teardown the domains that cause issue
+- relaunch the previously failing commands. They should succeed now.
