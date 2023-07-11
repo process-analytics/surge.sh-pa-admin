@@ -4,7 +4,10 @@ on:
   schedule:
     - cron: '0 3 * * 6'
   workflow_dispatch:
-
+    send-slack-notifications:
+      description: 'If true, send slack notifications when errors occur'
+      required: false
+      default: 'false'
 jobs:
   teardown_old_deployments:
     runs-on: ${{ vars.RUNNER_UBUNTU }}
@@ -15,3 +18,14 @@ jobs:
           regex: '[1-9]+ month.? ago'
         env:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+      - name: Send message to Slack channel
+        if: failure() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.send-slack-notifications == 'true') )
+        uses: bonitasoft/actions/packages/notify-slack@v2
+        with:
+          CHANNEL_ID: ${{ vars.SLACK_CHANNEL_ID_NOTIFICATIONS }}
+          MESSAGE: |
+            :fire: The teardown of old surge.sh domains failed!
+            @channel *We need someone*!
+            - Add a :fire_extinguisher:if you take the action to resolve the conflicts (only one person is required)
+            - Add a :sweat_drops: when it’s done (and eventually a :party_parrot:)
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
