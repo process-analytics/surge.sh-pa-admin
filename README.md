@@ -35,10 +35,10 @@ TypeError: Cannot read properties of undefined (reading 'grey')
     at Array.forEach (<anonymous>)
 ```
 
-The token may also be considered invalid by the `[surge-preview-tools](https://github.com/bonitasoft/actions/tree/main/packages/surge-preview-tools)` action for the same reason as it performs a `surge --list` to validate the token.
+The token may also be considered invalid by the [surge-preview-tools](https://github.com/bonitasoft/actions/tree/main/packages/surge-preview-tools) action for the same reason as it performs a `surge --list` to validate the token.
 
 In this case, the patch can help
-- run the "surge list" command locally or with https://github.com/process-analytics/surge.sh-pa-admin/actions/workflows/surge-list-domains.yml
+- run the "surge list" command locally or with the [surge-list-domains](https://github.com/process-analytics/surge.sh-pa-admin/actions/workflows/surge-list-domains.yml) workflow
 - detect the domain with missing information. In the following example, the first domain has issue
 ```
 Run npx surge --token *** list
