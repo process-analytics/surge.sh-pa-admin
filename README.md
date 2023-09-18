@@ -6,9 +6,9 @@ Manage the surge.sh domains of the Process Analytics project.
 
 Workflows are used to manage surge.sh domains specific to the Process Analytics project.
 
-- [List all domains](.github/workflows/surge-list-domains.yml)
-- [Teardown a domain](.github/workflows/surge-teardown-domain.yml)
-- [Teardown old domains](.github/workflows/surge-teardown-old-domains.yml)
+- [List all domains](.github/workflows/surge-list-domains.yml): get the list of all active domains
+- [Teardown a domain](.github/workflows/surge-teardown-domain.yml): delete a domain
+- [Teardown old domains](.github/workflows/surge-teardown-old-domains.yml): periodically delete domains older than one month (inactive PRs, domains not automatically closed when the PR is closed)
 
 
 ## Patching the "surge" CLI
