@@ -22,7 +22,7 @@ jobs:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
       - name: Send message to Slack channel
         if: failure() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.send-slack-notifications == 'true') )
-        uses: bonitasoft/actions/packages/notify-slack@v2
+        uses: bonitasoft/actions/packages/notify-slack@v3
         with:
           CHANNEL_ID: ${{ vars.SLACK_CHANNEL_ID_NOTIFICATIONS }}
           MESSAGE: |
