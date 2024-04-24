@@ -43,6 +43,13 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
+                    "text": "More details about the error <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}?check_suite_focus=true| here>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
                     "text": "@channel *We need someone*! \n - Add a :fire_extinguisher: if you investigate the problem (only one person is required) \n - Add a :sweat_drops: when it’s done (and eventually a :party_parrot:)"
                   }
                 }
