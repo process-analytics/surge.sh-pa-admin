@@ -22,13 +22,31 @@ jobs:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
       - name: Send message to Slack channel
         if: failure() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.send-slack-notifications == 'true') )
-        # WARN: the "notify-slack" has been removed in v3, do not bump!!!
-        uses: bonitasoft/actions/packages/notify-slack@v2
+        uses: slackapi/slack-github-action@v1.26.0
         with:
-          CHANNEL_ID: ${{ vars.SLACK_CHANNEL_ID_NOTIFICATIONS }}
-          MESSAGE: |
-            :fire: The teardown of old surge.sh domains failed!
-            @channel *We need someone*!
-            - Add a :fire_extinguisher: if you investigate the problem (only one person is required)
-            - Add a :sweat_drops: when it’s done (and eventually a :party_parrot:)
+          channel-id: ${{ vars.SLACK_CHANNEL_ID_NOTIFICATIONS }}
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": ":fire: The teardown of old surge.sh domains failed!",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "@channel *We need someone*! \n - Add a :fire_extinguisher: if you investigate the problem (only one person is required) \n - Add a :sweat_drops: when it’s done (and eventually a :party_parrot:)"
+                  }
+                }
+              ]
+            }
+        env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
