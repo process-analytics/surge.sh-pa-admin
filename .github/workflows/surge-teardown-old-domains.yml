@@ -13,6 +13,8 @@ on:
 jobs:
   teardown_old_deployments:
     runs-on: ${{ vars.RUNNER_UBUNTU }}
+    env:
+      SLACK_CHANNEL: ${{ vars.SLACK_CHANNEL_ID_NOTIFICATIONS }}
     steps:
       - name: Teardown surge deployments created more than 1 month ago
         uses: adrianjost/actions-surge.sh-teardown@v1.0.4
@@ -20,40 +22,29 @@ jobs:
           regex: '[1-9]+ month.? ago'
         env:
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+          
       - name: Send message to Slack channel
         if: failure() && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.event.inputs.send-slack-notifications == 'true') )
         uses: slackapi/slack-github-action@v2.0.0
         with:
-          channel-id: ${{ vars.SLACK_CHANNEL_ID_NOTIFICATIONS }}
+          errors: true
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
-            {
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": ":fire: The teardown of old surge.sh domains failed!",
-                    "emoji": true
-                  }
-                },
-                {
-                  "type": "divider"
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "More details about the error <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}?check_suite_focus=true| here>"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "@channel *We need someone*! \n - Add a :fire_extinguisher: if you investigate the problem (only one person is required) \n - Add a :sweat_drops: when it’s done (and eventually a :party_parrot:)"
-                  }
-                }
-              ]
-            }
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+            channel: ${{ env.SLACK_CHANNEL }}
+            text: "The teardown of old surge.sh domains failed!"
+            blocks: 
+              - type: "header"
+                text: 
+                  type: "plain_text"
+                  text: ":fire: The teardown of old surge.sh domains failed!"
+                  emoji: true
+              - type: "divider"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "More details about the error <https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}?check_suite_focus=true| here>"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "@channel *We need someone*! \n - Add a :fire_extinguisher: if you investigate the problem (only one person is required) \n - Add a :sweat_drops: when it’s done (and eventually a :party_parrot:)"
