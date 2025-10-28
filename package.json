@@ -4,7 +4,7 @@
     "prepare": "patch-package"
   },
   "devDependencies": {
-    "patch-package": "~8.0.0",
-    "surge": "~0.23.1"
+    "patch-package": "~8.0.1",
+    "surge": "~0.24.6"
   }
 }
